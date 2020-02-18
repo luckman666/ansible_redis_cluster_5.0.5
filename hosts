@@ -54,6 +54,6 @@
 192.168.1.119 ansible_ssh_user=root ansible_ssh_pass=root123. myid=3
 
 [redis]
-192.168.1.117 ansible_ssh_user=root ansible_ssh_pass=root123. prot=7000 nodeip1=192.168.1.117 
-192.168.1.118 ansible_ssh_user=root ansible_ssh_pass=root123. prot=7002 nodeip2=192.168.1.118
-192.168.1.119 ansible_ssh_user=root ansible_ssh_pass=root123. prot=7004 nodeip3=192.168.1.119
+192.168.1.117 ansible_ssh_user=root ansible_ssh_pass=root123. prot=7000
+192.168.1.118 ansible_ssh_user=root ansible_ssh_pass=root123. prot=7002
+192.168.1.119 ansible_ssh_user=root ansible_ssh_pass=root123. prot=7004
