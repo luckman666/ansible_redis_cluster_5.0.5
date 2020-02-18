@@ -1,0 +1,36 @@
+---
+  - name: install redis
+    unarchive: src={{AnsibleDir}}/files/{{redisVersion}}.tar.gz dest={{baseDir}} copy=yes
+  - name: make redis
+    shell: /bin/bash {{baseDir}}/redis_cluster/script/installRedis.sh
+    async: 300
+    poll: 5
+    tags: ['make redis']
+  - name: send redis config file
+    template: src={{AnsibleDir}}/roles/redis/templates/redis.conf.j2 dest={{baseDir}}/redis_cluster/{{prot}}/redis.conf
+  - set_fact: prot={{prot|int+1}}
+  - name: send redis config file
+    template: src={{AnsibleDir}}/roles/redis/templates/redis.conf.j2 dest={{baseDir}}/redis_cluster/{{prot}}/redis.conf
+  - debug: var=prot
+  - set_fact: prot={{prot|int-1}}
+  - debug: var=prot
+  - name: start redis install
+    shell: /bin/bash {{baseDir}}/redis_cluster/script/start.sh
+  - set_fact: prot=7000
+  - name: make redis cluster start script
+    template: src={{AnsibleDir}}/roles/redis/templates/createRedisClusterls.exp.j2 dest={{baseDir}}/redis_cluster/script/createRedisClusterls.exp
+    connection: local
+  - name: chmod createRedisClusterls.sh script
+    shell: chmod -R 755 {{baseDir}}/redis_cluster/script
+    connection: local
+  - name: create redis cluster
+    shell: /bin/bash {{baseDir}}/redis_cluster/script/createRedisClusterls.sh
+    run_once: true
+    connection: local
+    tags: ['create redis cluster']
+#vars_prompt:
+#  - name: Confirm create  cluster
+#    prompt: "Can I set the above configuration? (type 'yes' to accept):"
+#    default: yes
+#    connection: local
+#    tags: ['Confirm create cluster']

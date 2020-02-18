@@ -1,0 +1,26 @@
+---
+  - name: delete base path
+    file: path={{baseDir}}/redis_cluster state=absent
+  - name: delete redis path
+    file: path={{baseDir}}/{{redisVersion}} state=absent
+  - name: mkdir redis cluster path
+    file: path={{baseDir}}/redis_cluster/{{prot}} state=directory mode=0755
+  - name: mkdir redis cluster path2
+    file: path={{baseDir}}/redis_cluster/{{prot + 1}} state=directory mode=0755
+  - name: mkdir redis script path
+    file: path={{baseDir}}/redis_cluster/script state=directory mode=0755
+  - name: send create shell script
+    copy: src={{AnsibleDir}}/roles/redis/templates/createRedisClusterls.sh dest={{baseDir}}/redis_cluster/script/
+    connection: local
+  - name: send aotostar shell script
+    template: src={{AnsibleDir}}/roles/redis/templates/autostarSet.sh.j2 dest={{baseDir}}/redis_cluster/script/autostarSet.sh
+  - name: send install script
+    template: src={{AnsibleDir}}/roles/redis/templates/installRedis.sh.j2 dest={{baseDir}}/redis_cluster/script/installRedis.sh
+  - name: send shutdown script
+    template: src={{AnsibleDir}}/roles/redis/templates/shutdown.sh.j2 dest={{baseDir}}/redis_cluster/script/shutdown.sh
+  - name: send start script
+    template: src={{AnsibleDir}}/roles/redis/templates/start.sh.j2 dest={{baseDir}}/redis_cluster/script/start.sh
+  - name: chmod path
+    shell: chmod +x -R {{baseDir}}/redis_cluster/script/
+  - name: exec autostartSet
+    shell: /bin/bash {{baseDir}}/redis_cluster/script/autostarSet.sh

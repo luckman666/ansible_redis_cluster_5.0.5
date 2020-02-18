@@ -1,0 +1,14 @@
+---
+- hosts: redis
+  gather_facts: no 
+  remote_user: root
+  ignore_errors: yes
+  roles:
+    - redis
+  vars:
+    - baseDir: /opt/redis
+    - AnsibleDir: /etc/ansible
+    - redisVersion: redis-5.0.5
+    - nodeip1: 192.168.1.117
+    - nodeip2: 192.168.1.118
+    - nodeip3: 192.168.1.119

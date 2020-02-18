@@ -1,0 +1,6 @@
+#!/usr/bin/expect
+
+spawn /usr/local/bin/redis-cli --cluster create  {{nodeip1}}:{{prot|int}} {{nodeip1}}:{{prot|int+1}} {{nodeip2}}:{{prot|int+2}} {{nodeip2}}:{{prot|int+3}} {{nodeip3}}:{{prot|int+4}} {{nodeip3}}:{{prot|int+5}} --cluster-replicas 1
+expect {  
+   "*type 'yes' to accept*" {send "yes\r";exp_continue}  
+}

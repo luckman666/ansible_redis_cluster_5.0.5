@@ -1,0 +1,2 @@
+- include: init_env.yml 
+- include: install_redis.yml
