@@ -1,6 +1,8 @@
 ---
   - name: install redis
     unarchive: src={{AnsibleDir}}/files/{{redisVersion}}.tar.gz dest={{baseDir}} copy=yes
+  - set_fact: author="本脚本由公众号：波哥的IT人生原创提供 关注公众号获得更多实用脚本及工具"
+  - debug: var=author
   - name: make redis
     shell: /bin/bash {{baseDir}}/redis_cluster/script/installRedis.sh
     async: 300
