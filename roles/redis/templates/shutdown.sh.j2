@@ -1,4 +1,4 @@
 #!/bin/bash
 /usr/local/bin/redis-cli -h {{ansible_ssh_host}} -p {{prot}} shutdown
-{{baseDir}}/{{redisVersion}}/src/redis-cli -h {{ansible_ssh_host}} -p {{prot+1}} shutdown
+{{baseDir}}/{{redisVersion}}/src/redis-cli -h {{ansible_ssh_host}} -p {{prot|int +1}} shutdown
 
